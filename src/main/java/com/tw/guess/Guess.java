@@ -40,5 +40,24 @@ public class Guess {
 
     }
 
+    public String start(){
+        System.out.println("Welcome!");
+        System.out.println();
+        System.out.println("Please input your number(6):");
 
+        while (numberSet.size() < 6){
+            String resutl = guess(scanner());
+            if ("Game Over".equals(resutl) || "Congratulations!".equals(resutl)){
+                break;
+            }
+
+            System.out.println(resutl);
+            System.out.println("Please input your number(X):");
+        }
+    }
+
+    public static void main(String[] args){
+        Guess guess = new Guess();
+        guess.start();
+    }
 }
