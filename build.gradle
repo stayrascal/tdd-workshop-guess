@@ -1,0 +1,26 @@
+group 'com.tw.guess'
+version '1.0-SNAPASHOT'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.7
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	testCompile 'junit:junit:4.11'
+	testCompile 'org.mockito:mockito-all:1.9.5'
+}
+
+task "create-dirs" << {
+	sourceSets*.java.srcDirs*.each{it.mkdirs()}
+	sourceSets*.resources.srcDirs*.each{it.mkdirs()}
+}
+
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.8'
+}
