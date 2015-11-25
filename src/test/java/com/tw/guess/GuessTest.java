@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Random;
+import java.util.Scanner;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -46,18 +47,6 @@ public class GuessTest {
     }
 
     @Test
-    public void should_return_can_not_input_duplicate_numbers_when_input_2345_two_times_and_generate_number_is_1234() {
-        String[] guessNumbers = {"2345", "2345"};
-        String result = "";
-
-        for (String number : guessNumbers) {
-            result = guess.guess(number);
-        }
-
-        assertThat(result, is("Cannot input duplicate numbers!"));
-    }
-
-    @Test
     public void should_return_3A0B_when_input_5234_and_generate_number_is_1234() {
         String guessNumber = "5234";
 
@@ -67,14 +56,49 @@ public class GuessTest {
     }
 
     @Test
-    public void should_return_1234_when_scanner_1234(){
-        Guess guess = mock(Guess.class);
-        when(guess.scanner()).thenReturn("1234");
+    public void should_return_can_not_input_duplicate_numbers_when_input_1224() {
+        Scanner scanner = new Scanner("1224");
 
-        String number = guess.scanner();
+        String result = guess.scanner(scanner);
 
-        assertThat(number, is("1234"));
+        assertThat(result, is("Cannot input duplicate numbers!"));
     }
+
+    @Test
+    public void should_return_1234_when_scanner_1234(){
+        Scanner scanner = new Scanner("1234");
+
+        String result = guess.scanner(scanner);
+
+        assertThat(result, is("1234"));
+    }
+
+    @Test
+    public void shoud_return_welcome_when_start(){
+        String result = guess.start();
+
+        assertThat(result, is("Welcome!\n\nPlease input your number(6):"));
+    }
+
+    @Test
+    public void should_return_congratulations_when_run_1234(){
+        Scanner scanner = new Scanner("1234");
+
+        String result = guess.run(scanner);
+
+        assertThat(result, is("Congratulations!"));
+    }
+
+    /*@Test
+    public void should_return_game_over_when_input_wrong_six_times(){
+        Guess mockGuess = mock(Guess.class);
+        when(mockGuess.scanner(any())).thenReturn("1245", "2345", "3456", "4567", "5678", "7890");
+
+        String result = mockGuess.run(new Scanner(System.in));
+
+        assertThat(result, is("Game Over"));
+    }*/
+
 
 
 }
