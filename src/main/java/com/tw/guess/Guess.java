@@ -38,7 +38,6 @@ public class Guess {
     }
 
     public String scanner(Scanner scanner) {
-        //TODO 该处不太明确是否需要判断用户输入是否为数字以及长度,需求中没作要求
         return scanner.next();
     }
 
@@ -55,16 +54,41 @@ public class Guess {
     }
 
     public void continueInput(String number, String result){
-        if (isContainsDuplicateNumbersInStrNumber(number)) {
-            print("Cannot input duplicate numbers!");
-            print("\nPlease input your number(X):");
-        } else {
-            if (numberList.size() != GUESS_TIMES) {
+        if (isRightFormatOfInputNumber(number) && (numberList.size() != GUESS_TIMES)) {
                 print(result);
-                print("\nPlease input your number(X):");
-            }
+        }
+        if (numberList.size() != GUESS_TIMES){
+            print("\nPlease input your number(X):");
         }
 
+    }
+
+    public boolean isRightFormatOfInputNumber(String inputNumber){
+        if (isContainsDuplicateNumbersInStrNumber(inputNumber)){
+            print("Cannot input duplicate numbers!");
+            return false;
+        }
+
+        if (!isNumber(inputNumber)){
+            print("Please input number!");
+            return false;
+        }
+
+        if (inputNumber.length() != 4){
+            print("Please sure the length of number is 4!");
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean isNumber(String strNumber){
+        try {
+            Integer.parseInt(strNumber);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
     public static void print(String str) {

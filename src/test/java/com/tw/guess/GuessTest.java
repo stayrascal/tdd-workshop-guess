@@ -2,9 +2,6 @@ package com.tw.guess;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -14,8 +11,8 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(Scanner.class)
+/*@RunWith(PowerMockRunner.class)
+@PrepareForTest(Scanner.class)*/
 public class GuessTest {
 
     private Guess guess;
@@ -79,10 +76,10 @@ public class GuessTest {
     }
 
     @Test
-    public void should_return_congratulations_when_last_scanner_1234_and_generate_number_is_1234(){
+    public void should_return_congratulations_when_last_scanner_1234_and_generate_number_is_1234() {
        /* Scanner scanner = PowerMockito.mock(Scanner.class);
         PowerMockito.when(scanner.nextLine()).thenReturn("1234");*/
-        String str ="1245-1236-1235-1235-1235-1234";
+        String str = "1245-1236-1235-1235-1235-1234";
         Scanner scanner = new Scanner(str).useDelimiter("-");
 
         String result = guess.run(scanner);
@@ -90,12 +87,39 @@ public class GuessTest {
     }
 
     @Test
-    public void should_return_game_over_when_input_wrong_six_time_and_generate_number_is_1234(){
-        String str ="1245-1236-1235-1235-1235-1235";
+    public void should_return_game_over_when_input_wrong_six_time_and_generate_number_is_1234() {
+        String str = "1245-1236-1235-1235-1235-1235";
         Scanner scanner = new Scanner(str).useDelimiter("-");
 
         String result = guess.run(scanner);
         assertThat(result, is("Game Over"));
+    }
+
+    @Test
+    public void should_return_false_when_input_12345() {
+        String number = "12345";
+
+        boolean result = guess.isRightFormatOfInputNumber(number);
+
+        assertThat(result, is(false));
+    }
+
+    @Test
+    public void should_return_false_when_input_abcd() {
+        String number = "abcd";
+
+        boolean result = guess.isRightFormatOfInputNumber(number);
+
+        assertThat(result, is(false));
+    }
+
+    @Test
+    public void should_return_false_when_input_1223() {
+        String number = "1223";
+
+        boolean result = guess.isRightFormatOfInputNumber(number);
+
+        assertThat(result, is(false));
     }
 
 
