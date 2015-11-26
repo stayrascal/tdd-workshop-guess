@@ -2,6 +2,9 @@ package com.tw.guess;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -11,7 +14,8 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Scanner.class)
 public class GuessTest {
 
     private Guess guess;
@@ -26,6 +30,24 @@ public class GuessTest {
     }
 
     @Test
+    public void shoud_return_true_when_input_1224() {
+        String number = "1224";
+
+        boolean result = guess.isContainsDuplicateNumbersInStrNumber(number);
+
+        assertThat(result, is(true));
+    }
+
+    @Test
+    public void should_return_false_when_input_2345() {
+        String number = "2345";
+
+        boolean result = guess.isContainsDuplicateNumbersInStrNumber(number);
+
+        assertThat(result, is(false));
+    }
+
+    @Test
     public void should_return_congratulations_when_input_1234_and_generate_number_is_1234() {
         String guessNumber = "1234";
 
@@ -35,37 +57,20 @@ public class GuessTest {
     }
 
     @Test
-    public void should_return_game_over_when_input_wrong_six_times_and_generate_number_is_1234() {
-        String[] guessNumbers = {"2345", "2346", "2347", "2348", "2341", "2134"};
-        String result = "";
+    public void should_return_correct_response_when_input_wrong_six_times_and_generate_number_is_1234() {
+        String[] guessNumbers = {"2345", "5678", "4321", "1234"};
+        String[] expectedResults = {"0A3B", "0A0B", "0A4B", "Congratulations!"};
+        String result;
 
-        for (String number : guessNumbers){
-            result = guess.guess(number);
+        for (int i = 0; i < guessNumbers.length; i++) {
+            result = guess.guess(guessNumbers[i]);
+
+            assertThat(result, is(expectedResults[i]));
         }
-
-        assertThat(result, is("Game Over"));
     }
 
     @Test
-    public void should_return_3A0B_when_input_5234_and_generate_number_is_1234() {
-        String guessNumber = "5234";
-
-        String result = guess.guess(guessNumber);
-
-        assertThat(result, is("3A0B"));
-    }
-
-    @Test
-    public void should_return_can_not_input_duplicate_numbers_when_input_1224() {
-        Scanner scanner = new Scanner("1224");
-
-        String result = guess.scanner(scanner);
-
-        assertThat(result, is("Cannot input duplicate numbers!"));
-    }
-
-    @Test
-    public void should_return_1234_when_scanner_1234(){
+    public void should_return_1234_when_scanner_1234() {
         Scanner scanner = new Scanner("1234");
 
         String result = guess.scanner(scanner);
@@ -74,31 +79,24 @@ public class GuessTest {
     }
 
     @Test
-    public void shoud_return_welcome_when_start(){
-        String result = guess.start();
-
-        assertThat(result, is("Welcome!\n\nPlease input your number(6):"));
-    }
-
-    @Test
-    public void should_return_congratulations_when_run_1234(){
-        Scanner scanner = new Scanner("1234");
+    public void should_return_congratulations_when_last_scanner_1234_and_generate_number_is_1234(){
+       /* Scanner scanner = PowerMockito.mock(Scanner.class);
+        PowerMockito.when(scanner.nextLine()).thenReturn("1234");*/
+        String str ="1245-1236-1235-1235-1235-1234";
+        Scanner scanner = new Scanner(str).useDelimiter("-");
 
         String result = guess.run(scanner);
-
         assertThat(result, is("Congratulations!"));
     }
 
-    /*@Test
-    public void should_return_game_over_when_input_wrong_six_times(){
-        Guess mockGuess = mock(Guess.class);
-        when(mockGuess.scanner(any())).thenReturn("1245", "2345", "3456", "4567", "5678", "7890");
+    @Test
+    public void should_return_game_over_when_input_wrong_six_time_and_generate_number_is_1234(){
+        String str ="1245-1236-1235-1235-1235-1235";
+        Scanner scanner = new Scanner(str).useDelimiter("-");
 
-        String result = mockGuess.run(new Scanner(System.in));
-
+        String result = guess.run(scanner);
         assertThat(result, is("Game Over"));
-    }*/
-
+    }
 
 
 }

@@ -13,11 +13,11 @@ public class NumberGenerator {
     }
 
     public String generate() {
-        Set digits = new HashSet<>();
+        StringBuilder numberStr = new StringBuilder();
+        Set<Integer> digits = new HashSet<>();
         while (digits.size() < 4){
             digits.add(random.nextInt(10));
         }
-        StringBuilder numberStr = new StringBuilder();
         digits.forEach(numberStr::append);
         return numberStr.toString();
     }

@@ -41,7 +41,7 @@ public class NumberGeneratorTest {
     @Test
     public void the_return_string_should_have_different_diggits() {
         String generated = numberGenerator.generate();
-        Set numberSet = new HashSet<>();
+        Set<Character> numberSet = new HashSet<>();
         for (int i = 0; i < generated.length(); i++) {
             numberSet.add(generated.charAt(i));
         }
@@ -52,7 +52,7 @@ public class NumberGeneratorTest {
     @Test
     public void the_return_string_should_be_random() {
         int generatedTimes = 5;
-        Set numbersSet = new HashSet<>();
+        Set<String> numbersSet = new HashSet<>();
         for (int i = 0; i < generatedTimes; i++) {
             numbersSet.add(numberGenerator.generate());
         }

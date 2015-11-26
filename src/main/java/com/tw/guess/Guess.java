@@ -22,56 +22,56 @@ public class Guess {
         this.generatedNumber = numberGenerator.generate();
     }
 
+    public boolean isContainsDuplicateNumbersInStrNumber(String number) {
+        for (int i = 0; i < number.length(); i++) {
+            if (i != number.lastIndexOf(number.charAt(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String guess(String guessNumber) {
         numberList.add(guessNumber);
-        if (guessNumber.length() != 4){
-            return guessNumber;
-        }
         String result = compareNumber.compare(generatedNumber, guessNumber);
-        if (GUESS_SUCCESS_FLAG.equals(result)) {
-            return tipsMap.get(GUESS_SUCCESS_FLAG);
-        }
-        return numberList.size() == GUESS_TIMES ? GAME_OVER : result;
+        return GUESS_SUCCESS_FLAG.equals(result) ? tipsMap.get(GUESS_SUCCESS_FLAG) : result;
     }
 
     public String scanner(Scanner scanner) {
-        //TODO 该处不太明确是否需要判断用户输入是否为数字,需求中没作要求
-        String number = scanner.nextLine();
-        for (int i = 0; i < number.length(); i++) {
-            if (i != number.lastIndexOf(number.charAt(i))) {
-                return "Cannot input duplicate numbers!";
-            }
-        }
-        return number;
-    }
-
-    public String start() {
-        return "Welcome!\n\nPlease input your number(6):";
+        //TODO 该处不太明确是否需要判断用户输入是否为数字以及长度,需求中没作要求
+        return scanner.next();
     }
 
     public String run(Scanner scanner) {
-        String result = "";
         while (numberList.size() < GUESS_TIMES) {
-            print(numberList.size() + "");
-            result = guess(scanner(scanner));
-            if (GAME_OVER.equals(result) || tipsMap.get(GUESS_SUCCESS_FLAG).equals(result)) {
-                break;
+            String number = scanner(scanner);
+            String result = guess(number);
+            if (tipsMap.get(GUESS_SUCCESS_FLAG).equals(result)) {
+                return result;
             }
-            print(result + "\n\nPlease input your number(X):");
+            continueInput(number, result);
         }
-        return result;
+        return GAME_OVER;
     }
 
-    public static void main(String[] args) {
-        Guess guess = new Guess(new NumberGenerator(new Random()));
-
-        print(guess.start());
-
-        print(guess.run(new Scanner(System.in)));
+    public void continueInput(String number, String result){
+        if (isContainsDuplicateNumbersInStrNumber(number)) {
+            print("Cannot input duplicate numbers!");
+            print("\nPlease input your number(X):");
+        } else {
+            if (numberList.size() != GUESS_TIMES) {
+                print(result);
+                print("\nPlease input your number(X):");
+            }
+        }
 
     }
 
-    private static void print(String str) {
+    public static void print(String str) {
         System.out.println(str);
+    }
+
+    public void start() {
+        print("Welcome!\n\nPlease input your number(6):");
     }
 }

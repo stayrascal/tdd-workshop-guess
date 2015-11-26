@@ -13,6 +13,6 @@ public class CompareNumber {
                 }
             }
         }
-        return countA + "A" + countB + "B";
+        return String.format("%dA%dB", countA, countB);
     }
 }

@@ -13,6 +13,8 @@ repositories {
 dependencies {
 	testCompile 'junit:junit:4.11'
 	testCompile 'org.mockito:mockito-all:1.9.5'
+    testCompile 'org.powermock:powermock-api-mockito:1.6.3'
+    testCompile 'org.powermock:powermock-module-junit4:1.6.3'
 }
 
 task "create-dirs" << {
