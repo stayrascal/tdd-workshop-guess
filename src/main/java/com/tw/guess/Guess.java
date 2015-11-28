@@ -38,7 +38,8 @@ public class Guess {
     }
 
     public String scanner(Scanner scanner) {
-        return scanner.next();
+        //return scanner.next();
+        return scanner.nextLine();
     }
 
     public String run(Scanner scanner) {

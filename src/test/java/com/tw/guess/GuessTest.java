@@ -3,6 +3,7 @@ package com.tw.guess;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -75,10 +76,10 @@ public class GuessTest {
         assertThat(result, is("1234"));
     }
 
-    @Test
+   /* @Test
     public void should_return_congratulations_when_last_scanner_1234_and_generate_number_is_1234() {
-       /* Scanner scanner = PowerMockito.mock(Scanner.class);
-        PowerMockito.when(scanner.nextLine()).thenReturn("1234");*/
+       *//* Scanner scanner = PowerMockito.mock(Scanner.class);
+        PowerMockito.when(scanner.nextLine()).thenReturn("1234");*//*
         String str = "1245-1236-1235-1235-1235-1234";
         Scanner scanner = new Scanner(str).useDelimiter("-");
 
@@ -93,6 +94,17 @@ public class GuessTest {
 
         String result = guess.run(scanner);
         assertThat(result, is("Game Over"));
+    }*/
+
+    @Test
+    public void shoud_return_game_over_when_scanner_wrong_six_time_and_generate_number_is_1234() {
+        String str = "1245\n1245\n1245\n1245\n1245\n1245";
+        ByteArrayInputStream in = new ByteArrayInputStream(str.getBytes());
+        Scanner scanner = new Scanner(in);
+
+        String resutl = guess.run(scanner);
+
+        assertThat(resutl, is("Game Over"));
     }
 
     @Test
